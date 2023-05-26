@@ -1,6 +1,7 @@
 import streamlit as st
 from flask import Flask
 import mysql.connector
+from PIL import Image
 
 app = Flask(__name__)
 #CORS(app)
@@ -126,5 +127,40 @@ def clear_button():
 login_form()
 
 
+st.markdown(
+    """
+    <style>
+    .service provider {
+        color: white;
+        font-size: 40px;
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
+# Render the green color title
+st.markdown('<h1 class="service provider">Pick up your service type</h1>', unsafe_allow_html=True)
+
+# Create a dropdown menu
+option = st.selectbox('Pick up', ("Vehicle repairing", "Electric repairing", "Repair broken pipes"))
+
+
+logo_url = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+logo_url1 ="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+# Display the logo
+logo = st.image(logo_url)
+logo1 = st.image(logo_url1)
+
+# Define the profiles and corresponding logos
+profiles = {
+    'Vehicle repairing': [logo1, logo1, logo1],
+    'Electric repairing': [logo1, logo1, logo1],
+    'Repair broken pipes': [logo1, logo1, logo1],
+}
+
+# Get the selected profiles based on the selected option
+# Get the selected profiles based on the selected option
+selected_profiles = profiles.get(option, [])
 
