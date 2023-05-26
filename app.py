@@ -54,29 +54,29 @@ def login_form():
         # Perform sign up action or navigate to sign up page
         topic = st.radio("Select your profile", ("As a customer", "As a service provider"))
 
-    if topic == "As a customer":
-        st.subheader("Customer Info")
-        st.text_input("Customer Name")
-        st.text_input("NIC")
-        st.text_input("Address")
-        st.text_input("Mobile Number")
+        if topic == "As a customer":
+            st.subheader("Customer Info")
+            st.text_input("Customer Name")
+            st.text_input("NIC")
+            st.text_input("Address")
+            st.text_input("Mobile Number")
 
-        col1, col2, col3 = st.columns(3)
-        with col2:
-            save_button()
-        with col3:
-            clear_button()
+            col1, col2, col3 = st.columns(3)
+            with col2:
+                save_button()
+            with col3:
+                clear_button()
 
         # Add Topic A logic here
 
-    elif topic == "As a service provider":
-        st.subheader("Service Provider Info")
-        st.text_input("Service Provider Name")
-        selected_option = st.selectbox("Service Type", ["Vehicle repairing", "Electric repairing", "Repair broken pipes"])
-        st.text_input("NIC")
-        st.text_input("Address")
-        st.text_input("Mobile Number")
-        # Add Topic B logic here
+        elif topic == "As a service provider":
+            st.subheader("Service Provider Info")
+            st.text_input("Service Provider Name")
+            selected_option = st.selectbox("Service Type", ["Vehicle repairing", "Electric repairing", "Repair broken pipes"])
+            st.text_input("NIC")
+            st.text_input("Address")
+            st.text_input("Mobile Number")
+                    # Add Topic B logic here
 
 def save_button():
     if st.button("Save"):
