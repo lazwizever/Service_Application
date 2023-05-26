@@ -1,11 +1,55 @@
 import streamlit as st
-# Display the app name as a title
-title_text = "<h1 style='color: #1B9C85;'>BestMatch</h1>"
-st.markdown(title_text, unsafe_allow_html=True)
 
-def sign_up():
-    # Add your sign-up logic here
-    topic = st.radio("Select your profile", ("As a customer", "As a service provider"))
+# Add custom CSS to style the title
+st.markdown(
+    """
+    <style>
+    .green-title {
+        color: green;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Render the green color title
+st.markdown('<h1 class="green-title">BestMatch</h1>', unsafe_allow_html=True)
+
+# Add custom CSS to center-align the subheader
+st.markdown(
+    """
+    <style>
+    .center-subheader {
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Render the centered subheader
+st.markdown('<h2 class="center-subheader">Login</h2>', unsafe_allow_html=True)
+
+# Create the login form
+def login_form():
+    
+    # Get the username and password from the user
+    username = st.text_input('Username')
+    password = st.text_input('Password', type='password')
+
+    # Check if the login button is clicked
+    if st.button('Login'):
+        # Perform login authentication and user validation here
+        # Replace the condition with your actual login logic
+        if username == 'admin' and password == 'password':
+            st.success('Logged in successfully!')
+        else:
+            st.error('Invalid credentials')
+
+    st.write('Don\'t have an account?')
+    if st.button('Sign up'):
+        # Perform sign up action or navigate to sign up page
+        topic = st.radio("Select your profile", ("As a customer", "As a service provider"))
 
     if topic == "As a customer":
         st.subheader("Customer Info")
@@ -44,18 +88,5 @@ def clear_button():
         pass
 
 
-def sign_in():
-    # Add your sign-in logic here
-    st.write("Sign-in button clicked!")
-
-def main():
-   
-    if st.button("Sign Up"):
-        sign_up()
-
-    if st.button("Sign In"):
-        sign_in()
-
-
-if __name__ == "__main__":
-    main()
+# Run the login form
+login_form()
