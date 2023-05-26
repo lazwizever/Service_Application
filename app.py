@@ -6,6 +6,8 @@ st.markdown(
     <style>
     .green-title {
         color: green;
+        font-size: 60px;
+        text-align: center;
     }
     </style>
     """,
@@ -21,6 +23,7 @@ st.markdown(
     <style>
     .center-subheader {
         text-align: center;
+        font-size: 26px;
     }
     </style>
     """,
@@ -66,7 +69,7 @@ def login_form():
 
         # Add Topic A logic here
 
-    if topic == "As a service provider":
+    elif topic == "As a service provider":
         st.subheader("Service Provider Info")
         st.text_input("Service Provider Name")
         selected_option = st.selectbox("Service Type", ["Vehicle repairing", "Electric repairing", "Repair broken pipes"])
