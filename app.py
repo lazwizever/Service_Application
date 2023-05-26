@@ -1,4 +1,22 @@
 import streamlit as st
+from flask import Flask
+import mysql.connector
+
+app = Flask(__name__)
+#CORS(app)
+#CORS(app, resources={r"/*": {"origins": "*"}})
+app.config['MYSQL_HOST'] = 'database-1.c3kt6gsj5iwk.ap-southeast-2.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'admin'
+app.config['MYSQL_PASSWORD'] = 'appleGaha'
+app.config['MYSQL_DB'] = 'serviceApplication'
+
+# connect mysql database
+conn = mysql.connector.connect(
+    host=app.config['MYSQL_HOST'],
+    user=app.config['MYSQL_USER'],
+    password=app.config['MYSQL_PASSWORD'],
+    database=app.config['MYSQL_DB']
+)
 
 # Add custom CSS to style the title
 st.markdown(
@@ -17,6 +35,7 @@ st.markdown(
 # Render the green color title
 st.markdown('<h1 class="green-title">BestMatch</h1>', unsafe_allow_html=True)
 
+
 # Add custom CSS to center-align the subheader
 st.markdown(
     """
@@ -33,20 +52,28 @@ st.markdown(
 # Render the centered subheader
 st.markdown('<h2 class="center-subheader">Login</h2>', unsafe_allow_html=True)
 
+
 # Create the login form
 def login_form():
-    
+    cursor = conn.cursor()
     # Get the username and password from the user
     username = st.text_input('Username')
     password = st.text_input('Password', type='password')
 
+
+    login = st.button("Login", use_container_width=True)
+
     # Check if the login button is clicked
-    if st.button('Login'):
+    if login:
+       query = 'SELECT * FROM Login WHERE username=%s AND password=%s'
+       values = (username,password)
+       cursor.execute(query, values)
+       response = cursor.fetchone()
         # Perform login authentication and user validation here
         # Replace the condition with your actual login logic
-        if username == 'admin' and password == 'password':
+       if response :
             st.success('Logged in successfully!')
-        else:
+       else:
             st.error('Invalid credentials')
 
     st.write('Don\'t have an account?')
@@ -56,10 +83,10 @@ def login_form():
 
         if topic == "As a customer":
             st.subheader("Customer Info")
-            st.text_input("Customer Name")
-            st.text_input("NIC")
-            st.text_input("Address")
-            st.text_input("Mobile Number")
+            input1 =st.text_input("Customer Name")
+            input2 =st.text_input("NIC")
+            input3 =st.text_input("Address")
+            input4 =st.text_input("Mobile Number")
 
             col1, col2, col3 = st.columns(3)
             with col2:
@@ -79,13 +106,17 @@ def login_form():
                     # Add Topic B logic here
 
 def save_button():
-    if st.button("Save"):
+    if st.button("Save", use_container_width=True):
         # Perform save operation or store the input values
         # You can access the values entered in the input fields and perform necessary actions here
+        
+        cursor.execute('INSERT INTO Customer (customerName ,customerNIC , customerAddress , mobileNumber ) VALUES (%s, %s, %s, %s)', (customerName, customerNIC, customerAddress, mobileNumber))
+        conn.commit()
+        st.success('Customer added successfully')
         pass
 
 def clear_button():
-    if st.button("Clear"):
+    if st.button("Cancel", use_container_width=True):
         # Clear the input fields or reset the values
         # You can reset the input field values or perform necessary actions here
         pass
@@ -93,3 +124,7 @@ def clear_button():
 
 # Run the login form
 login_form()
+
+
+
+
